@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Calculator for Girls</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 0;
+      }
+
+      .calculator-container {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      .calculator {
+        width: 300px;
+        height: 400px;
+        background-color: #fff;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .display {
+        width: 100%;
+        height: 50px;
+        background-color: #fff;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        font-size: 24px;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .keys-container {
+        background-color: #ff69b4; /* pink */
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 10px;
+      }
+
+      .key {
+        width: 60px;
+        height: 60px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        font-size: 24px;
+        text-align: center;
+        padding: 10px;
+        cursor: pointer;
+      }
+
+      .key:hover {
+        background-color: #ccc;
+      }
+
+      .message {
+        text-align: center;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="calculator-container">
+      <div class="calculator">
+        <div class="display">
+          <input type="text" id="display" disabled>
+        </div>
+        <div class="keys-container">
+          <button class="key" id="clear">C</button>
+          <button class="key" id="backspace">&lt;</button>
+          <button class="key" id="seven">7</button>
+          <button class="key" id="eight">8</button>
+          <button class="key" id="nine">9</button>
+          <button class="key" id="divide">/</button>
+          <button class="key" id="four">4</button>
+          <button class="key" id="five">5</button>
+          <button class="key" id="six">6</button>
+          <button class="key" id="multiply">*</button>
+          <button class="key" id="one">1</button>
+          <button class="key" id="two">2</button>
+          <button class="key" id="three">3</button>
+          <button class="key" id="subtract">-</button>
+          <button class="key" id="zero">0</button>
+          <button class="key" id="decimal">.</button>
+          <button class="key" id="equals">=</button>
+          <button class="key" id="add">+</button>
+        </div>
+      </div>
+      <div class="message">
+        <p>You look beautiful!</p>
+        <p>&#x1F618;</p>
+      </div>
+    </div>
+
+    <script>
+      const display = document.getElementById('display');
+      const keys = document.querySelectorAll('.key');
+
+      let currentNumber = '';
+      let previousNumber = '';
+      let operator = '';
+
+      keys.forEach(key => {
+        key.addEventListener('click', () => {
+          const keyValue = key.textContent;
+
+          if (keyValue === 'C') {
+            currentNumber = '';
+            previousNumber = '';
+            operator = '';
+            display.value = '';
+          } else if (keyValue === '&lt;') {
+            currentNumber = currentNumber.slice(0, -1);
+            display.value = currentNumber;
+          } else if (keyValue === '=') {
+            const result = calculate();
+            display.value = result;
+            currentNumber = result;
+            previousNumber = '';
+            operator = '';
+          } else if (keyValue === '+' || keyValue === '-' || keyValue === '*' || keyValue === '/') {
+            operator = keyValue;
+            previousNumber = currentNumber;
+            currentNumber = '';
+          } else {
+            currentNumber += keyValue;
+            display.value = currentNumber;
+          }
+        });
+      });
+
+      function calculate() {
+        let result;
+
+        if (operator === '+') {
+          result = parseFloat(previousNumber) + parseFloat(currentNumber);
+        } else if (operator === '-') {
+          result = parseFloat(previousNumber) - parseFloat(currentNumber);
+        } else if (operator === '*') {
+          result = parseFloat(previousNumber) * parseFloat(currentNumber);
+        } else if (operator === '/') {
+          result = parseFloat(previousNumber) / parseFloat(currentNumber);
+        }
+
+        return result;
+      }
+    </script>
+  </body>
+</html>
